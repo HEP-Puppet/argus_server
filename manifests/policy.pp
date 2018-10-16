@@ -15,7 +15,7 @@ class argus_server::policy {
   # Restart argus if needed
   exec {'ssl restart':
     path => '/usr/bin:/bin:/usr/sbin:/sbin',
-    command => $restat_cmd,
+    command => $restart_cmd,
     onlyif  => 'pap-admin lp | grep -q SSL',
   }
 
