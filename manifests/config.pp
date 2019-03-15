@@ -1,17 +1,18 @@
 # Class: arc_ce
 # Sets up the configuration file and file dependencies.
 class argus_server::config(
-  $argus_host         = $argus_server::argus_host,
-  $centralban_enabled = $argus_server::centralban_enabled,
-  $centralban_dn      = $argus_server::centralban_dn,
-  $centralban_host    = $argus_server::centralban_host,
-  $pap_poll_interval  = $argus_server::pap_poll_interval,
+  $argus_host             = $argus_server::argus_host,
+  $centralban_enabled     = $argus_server::centralban_enabled,
+  $centralban_dn          = $argus_server::centralban_dn,
+  $centralban_host        = $argus_server::centralban_host,
+  $pap_poll_interval      = $argus_server::pap_poll_interval,
   $pdp_retention_interval = $argus_server::pdp_retention_interval,
-  $admin_password     = $argus_server::admin_password,
-  $servicecert        = $argus_server::servicecert,
-  $servicekey         = $argus_server::servicekey,
-  $servicecert_source = $argus_server::servicecert_source,
-  $servicekey_source  = $argus_server::servicekey_source,
+  $admin_password         = $argus_server::admin_password,
+  $manage_certificate     = $argus_server::manage_certificate,
+  $servicecert            = $argus_server::servicecert,
+  $servicekey             = $argus_server::servicekey,
+  $servicecert_source     = $argus_server::servicecert_source,
+  $servicekey_source      = $argus_server::servicekey_source,
 ) {
 
   # ARGUS configuration files
@@ -51,36 +52,38 @@ class argus_server::config(
     notify  => Service['argus-pepd'],
   }
 
-  if $servicecert_source != '' {
-    file { $servicecert:
-      ensure => 'present',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0600',
-      source => $servicecert_source,
+  if $manage_certificate {
+    if $servicecert_source != '' {
+      file { $servicecert:
+        ensure => 'present',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0600',
+        source => $servicecert_source,
+      }
+    } else {
+      file { $servicecert:
+        ensure => 'present',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0600',
+      }
     }
-  }else{
-    file { $servicecert:
-      ensure => 'present',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0600',
-    }
-  }
-  if $servicekey_source != '' {
-    file { $servicekey:
-      ensure => 'present',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
-      source => $servicekey_source,
-    }
-  }else{
-    file { $servicekey:
-      ensure => 'present',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
+    if $servicekey_source != '' {
+      file { $servicekey:
+        ensure => 'present',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+        source => $servicekey_source,
+      }
+    } else {
+      file { $servicekey:
+        ensure => 'present',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+      }
     }
   }
 }
