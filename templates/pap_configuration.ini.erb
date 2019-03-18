@@ -10,6 +10,9 @@ centralbanning.public = true
 
 [paps:properties]
 poll_interval = <%= @pap_poll_interval %>
+<%- if @centralban_enabled == 'true' -%>
+ordering = centralbanning
+<% end -%>
 ordering = default
 
 [repository]
