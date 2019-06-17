@@ -13,6 +13,7 @@ class argus_server::config(
   $servicekey             = $argus_server::servicekey,
   $servicecert_source     = $argus_server::servicecert_source,
   $servicekey_source      = $argus_server::servicekey_source,
+  $configure_bdii         = $argus_server::configure_bdii
 ) {
 
   # ARGUS configuration files
@@ -51,6 +52,10 @@ class argus_server::config(
     content => template("${module_name}/pepd.ini.erb"),
     notify  => Service['argus-pepd'],
   }
+  
+  if $configure_bdii {
+     class { 'argus_server::bdii':}
+    }
 
   if $manage_certificate {
     if $servicecert_source != '' {

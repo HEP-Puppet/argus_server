@@ -10,7 +10,7 @@ class argus_server::services(
     require => Class['fetchcrl::install'],
     unless  => '/bin/ls /etc/grid-security/certificates/*.r0 1>/dev/null 2>&1'
   }
-
+  if $manage_certificate {
   exec { 'hostcert update':
     command     => $argus_server::restart_cmd,
     refreshonly => true,
@@ -18,8 +18,8 @@ class argus_server::services(
       File[$servicecert],
       File[$servicekey],
     ],
+   }
   }
-
   service { 'argus-pap':
     ensure     => 'running',
     enable     => true,
