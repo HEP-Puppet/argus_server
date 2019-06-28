@@ -13,7 +13,7 @@
 class argus_server (
   $argus_host_dn,
   $admin_password,
-  $site_name,
+  $site_name              = 'MY-DUMMY-SITE',
   $argus_host             = $::fqdn,
   $packages               = ['java-1.8.0-openjdk', 'argus-authz', 'bdii', 'glite-info-provider-service'],
   $bdii_config_dir          = '/etc/glite/info/service',
