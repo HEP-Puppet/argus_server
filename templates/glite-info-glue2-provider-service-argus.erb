@@ -1,0 +1,11 @@
+#!/bin/sh
+
+##
+# Argus services GLUE2 info provider
+# Created by Puppet Module
+#
+# See: /etc/argus/info-glue2
+##
+
+/usr/bin/glite-info-glue2-multi /etc/argus/info-glue2/glite-info-glue2-argus-pap.conf,/etc/argus/info-glue2/glite-info-glue2-argus-pdp.conf,/etc/argus/info-glue2/glite-info-glue2-argus-pep.conf <%= @site_name %> /etc/argus/info-glue2/glite-info-glue2-service-argus.conf
+
